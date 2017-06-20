@@ -1,0 +1,49 @@
+//
+// WordPress content classes
+//
+
+.figure,
+.wp-caption {
+    margin: 1rem 0;
+    text-align: center;
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    blockquote {
+        + .caption {
+            text-align: right;
+        }
+    }
+
+    > .caption,
+    > .wp-caption-text {
+        font-size: 0.875em;
+        margin: 0.5em 0;
+        text-align: center;
+    }
+}
+
+.alignnone {
+    margin: 0;
+}
+
+.aligncenter,
+.aligncenter.wp-caption {
+    display: block;
+    margin: 1em auto;
+}
+
+.alignright,
+.alignright.wp-caption {
+    float: right;
+    margin: 1em 0 1em 1em;
+}
+
+.alignleft,
+.alignleft.wp-caption {
+    float: left;
+    margin: 1em 1em 1em 0;
+}

@@ -1,0 +1,73 @@
+// Breakpoints
+//
+// This is the default array of named breakpoints. If a variable with the same
+// name is declared earlier in the code, these values will be ignored.
+$media-breakpoints: (
+    pico:   320px,
+    nano:   480px,
+    micro:  640px,
+    milli:  800px,
+    normal: 960px,
+    kilo:   1120px,
+    mega:   1280px,
+    giga:   1440px,
+    tera:   1600px,
+) !default;
+
+// Media query
+//
+// Inserts a media query with min and/or max widths, optionally restricted to
+// particular media types (e.g. screen). If the min or max widths are zero or
+// false, they will be omitted from the media query. The default media type is
+// "all". The fourth argument allows you to append an arbitrary string to the
+// media query, e.g. "and (min-height: 320px)".
+//
+// @param mixed $min Length or named breakpoint used as min-width
+// @param mixed $max Length or named breakpoint used as max-width
+// @param string $media Media type, default "all"
+// @param string $after Additional media queries
+@mixin media-query($min, $max: null, $media: all, $after: null) {
+    $query: $media;
+
+    // If $min exists in the array of named breakpoints, assume it is a
+    // reference to that value and not a value itself.
+    @if map-get($media-breakpoints, $min) {
+        $min: map-get($media-breakpoints, $min);
+    }
+
+    // Ditto $max. When using named breakpoints with max-width media queries,
+    // subtract 1px from the length to avoid overlapping with min-width media
+    // queries.
+    @if map-get($media-breakpoints, $max) {
+        $max: map-get($media-breakpoints, $max);
+        $one-pixel: 1px;
+
+        // If the units are not pixels, they are probably ems or rems, so make
+        // the value to be subtracted as small as possible.
+        @if unit($max) != 'px' {
+            $one-pixel: 0.001;
+        }
+
+        $max: $max - $one-pixel;
+    }
+
+    // If $min is a length, append a min-width media query
+    @if type-of($min) == 'number' and $min != 0 {
+        $query: "#{$query} and (min-width: #{$min})";
+    }
+
+    // If $max is a length, append a min-width media query
+    @if type-of($max) == 'number' and $max != 0 {
+        $query: "#{$query} and (max-width: #{$max})";
+    }
+
+    // If $after is a string, append it to the media query
+    @if type-of($after) == 'string' {
+        $query: "#{$query} #{$after}";
+    }
+
+    // Write the media query
+    @media #{$query} {
+        @content;
+    }
+}
