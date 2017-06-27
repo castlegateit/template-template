@@ -51,7 +51,8 @@ input[type="radio"] {
 }
 
 input[type="search"] {
-    -webkit-appearance: textfield;
+    // -webkit-appearance: textfield; // cannot change border radius
+    -webkit-appearance: none;
 }
 
 input[type="search"]::-webkit-search-decoration,
