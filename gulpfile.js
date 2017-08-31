@@ -31,6 +31,8 @@ gulp.task('compile:css', ['clean:css'], function () {
 gulp.task('compile:js', ['clean:js'], function () {
     return gulp.src([
         src + '/js/lib/jquery.js',
+        src + '/js/lib/jquery.!(*.*).js',
+        src + '/js/lib/jquery.*.js',
         src + '/js/lib/**/*.js',
         src + '/js/settings.js',
         src + '/js/**/*.js'
