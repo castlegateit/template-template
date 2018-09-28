@@ -25,6 +25,7 @@ figure {
 // Document body
 body {
     color: $text_color;
+    font-family: $body_font;
     line-height: 1.5;
     margin: 0;
     -webkit-text-size-adjust: none;
@@ -49,7 +50,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: $heading_font;
     font-size: 1em;
     line-height: 1.25;
     margin: 1em 0 0 0;

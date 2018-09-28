@@ -12,10 +12,11 @@
 }
 
 // Page section wrapper
-body > div > .wrap {
+.page-wrap {
     @extend %float-container;
 
     margin: 0 auto;
     max-width: 60rem;
     padding: 0 1em;
+    position: relative;
 }
