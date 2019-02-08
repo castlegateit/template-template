@@ -15,7 +15,7 @@
   "devDependencies": {
     "del": "*",
     "gulp": "*",
-    "gulp-autoprefixer": "^3.0",
+    "gulp-autoprefixer": "*",
     "gulp-concat": "*",
     "gulp-plumber": "*",
     "gulp-sass": "*",
