@@ -1,0 +1,58 @@
+// Breakpoints every n pixels; round max widths to prevent min width overlap
+$media-breakpoint-increment: 160px !default;
+$media-breakpoint-round: 1px !default;
+
+// Named breakpoints, like Bootstrap
+$media-breakpoints: (
+    xs: 3,
+    sm: 4,
+    md: 5,
+    lg: 6,
+    xl: 8,
+) !default;
+
+// Sanitize breakpoint value
+@function sanitize-media-breakpoint($breakpoint, $round-down: false) {
+    @if type-of($breakpoint) == 'string' and
+        map-get($media-breakpoints, $breakpoint) {
+        $breakpoint: map-get($media-breakpoints, $breakpoint);
+    }
+
+    @if type-of($breakpoint) != 'number' or $breakpoint == 0 {
+        @return 0;
+    }
+
+    @if unitless($breakpoint) {
+        $breakpoint: $breakpoint * $media-breakpoint-increment;
+
+        @if $round-down and comparable($breakpoint, $media-breakpoint-round) {
+            $breakpoint: $breakpoint - $media-breakpoint-round;
+        }
+    }
+
+    @return $breakpoint;
+}
+
+// Return complete media query, with optional media type and arbitrary
+// additional media query rules.
+@mixin media-query($min: null, $max: null, $media: all, $after: null) {
+    $media-query: $media;
+    $min: sanitize-media-breakpoint($min);
+    $max: sanitize-media-breakpoint($max, true);
+
+    @if $min != 0 {
+        $media-query: "#{$media-query} and (min-width: #{$min})";
+    }
+
+    @if $max != 0 {
+        $media-query: "#{$media-query} and (max-width: #{$max})";
+    }
+
+    @if type-of($after) {
+        $media-query: "#{$media-query} #{$after}";
+    }
+
+    @media #{$media-query} {
+        @content;
+    }
+}
