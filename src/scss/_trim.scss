@@ -1,0 +1,25 @@
+//
+// Trim box
+//
+
+// Trim top margins of content to allow even top padding
+@mixin trim-content-top {
+    > :first-child,
+    > :first-child :first-child {
+        margin-top: 0;
+    }
+}
+
+// Trim bottom margins of content to allow even bottom padding
+@mixin trim-content-bottom {
+    > :last-child,
+    > :last-child :last-child {
+        margin-bottom: 0;
+    }
+}
+
+// Trim top and bottom margins of content
+@mixin trim-content {
+    @include trim-content-top;
+    @include trim-content-bottom;
+}

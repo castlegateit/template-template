@@ -3,7 +3,7 @@
 //
 
 // Float container
-%float-container {
+@mixin float-container {
     &::after {
         clear: both;
         content: "";
@@ -13,7 +13,7 @@
 
 // Page section wrapper
 .page-wrap {
-    @extend %float-container;
+    @include float-container;
 
     margin: 0 auto;
     max-width: 60rem;

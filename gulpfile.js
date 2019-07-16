@@ -9,7 +9,7 @@ var uglify = require('gulp-uglify');
 var del = require('del');
 
 var src = './src';
-var dst = '.';
+var dst = './assets';
 
 gulp.task('clean:css', gulp.series(function () {
     return del(dst + '/css/*');
@@ -23,7 +23,9 @@ gulp.task('compile:css', gulp.series(['clean:css'], function () {
     return gulp.src(src + '/scss/**/*.scss')
         .pipe(maps.init())
         .pipe(sass().on('error', sass.logError))
-        .pipe(prefix({browsers: ['Android 4', 'Explorer 9', 'Safari 7']}))
+        .pipe(prefix({
+            remove: false
+        }))
         .pipe(maps.write('.'))
         .pipe(gulp.dest(dst + '/css'));
 }));
@@ -36,11 +38,18 @@ gulp.task('compile:js', gulp.series(['clean:js'], function () {
         src + '/js/lib/**/*.js',
         src + '/js/settings.js',
         src + '/js/**/*.js'
-    ])
+    ], {
+        allowEmpty: true
+    })
         .pipe(plumber())
         .pipe(maps.init())
         .pipe(concat('script.js'))
-        .pipe(uglify({compress: false, output: {beautify: true}}))
+        .pipe(uglify({
+            compress: false,
+            output: {
+                beautify: true
+            }
+        }))
         .pipe(maps.write('.'))
         .pipe(gulp.dest(dst + '/js'));
 }));
