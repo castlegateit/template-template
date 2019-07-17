@@ -7,6 +7,8 @@ var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
 
 var del = require('del');
+var fs = require('fs');
+var http = require('http');
 
 var src = './src';
 var dst = './assets';
@@ -54,9 +56,31 @@ gulp.task('compile:js', gulp.series(['clean:js'], function () {
         .pipe(gulp.dest(dst + '/js'));
 }));
 
+gulp.task('serve', gulp.series(function () {
+    http.createServer(function (request, response) {
+        var file = __dirname + request.url;
+
+        if (file.endsWith('/')) {
+            file = file + 'index.html';
+        }
+
+        fs.readFile(file, function (error, data) {
+            if (error) {
+                response.writeHead(404);
+                response.end('page not found');
+
+                return;
+            }
+
+            response.writeHead(200);
+            response.end(data);
+        });
+    }).listen(8080);
+}));
+
 gulp.task('default', gulp.series(['compile:css', 'compile:js']));
 
-gulp.task('watch', gulp.series(['default'], function () {
+gulp.task('watch', gulp.series(['default', 'serve'], function () {
     gulp.watch(src + '/scss/**/*.scss', gulp.series(['compile:css']));
     gulp.watch(src + '/js/**/*.js', gulp.series(['compile:js']));
 }));
