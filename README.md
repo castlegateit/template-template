@@ -2,6 +2,12 @@
 
 A template for static templates. Note that `package.json` uses `*` for dependency versions, which will download the latest available versions. You may want to switch to something like `^2.1.x` to ensure you only get versions compatible with, for example, 2.1.x. See [documentation](https://docs.npmjs.com/files/package.json#dependencies).
 
+## Gulp tasks
+
+*   **default**: compile CSS and JavaScript and exit.
+*   **serve**: serve static template files on port 8080.
+*   **watch**: compile CSS and JavaScript, recompile on file change, and serve static template files on port 8080.
+
 ## License
 
 Copyright (c) 2019 Castlegate IT. All rights reserved.
