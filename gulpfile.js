@@ -80,7 +80,7 @@ gulp.task('serve', gulp.series(function () {
 
 gulp.task('default', gulp.series(['compile:css', 'compile:js']));
 
-gulp.task('watch', gulp.series(['default', 'serve'], function () {
+gulp.task('watch', gulp.parallel(['default', 'serve'], function () {
     gulp.watch(src + '/scss/**/*.scss', gulp.series(['compile:css']));
     gulp.watch(src + '/js/**/*.js', gulp.series(['compile:js']));
 }));
